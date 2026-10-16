@@ -76,3 +76,5 @@ jobs:
           npm run release
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          # Shows the OIDC token exchange in the log (why auth did or did not work).
+          NPM_CONFIG_LOGLEVEL: verbose
