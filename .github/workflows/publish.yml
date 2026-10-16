@@ -56,14 +56,23 @@ jobs:
           node-version: 'lts/*'
           cache: 'npm'
 
+      - name: Update npm
+        # npm Trusted Publishing (OIDC) needs npm 11.5.1 or newer.
+        run: npm install -g npm@latest
+
       - name: Install dependencies
         run: npm ci
 
       - name: Release
         # Publishes to npm with a provenance attestation (requires id-token: write above).
         # Lint and build run as part of the release.
+        # With Trusted Publishing configured on npmjs.com, no NPM_TOKEN is
+        # needed: npm authenticates with the job's OIDC token. The token is
+        # only used when the secret is set (Option B).
         run: |
-          [ -n "$NPM_TOKEN" ] && npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"
+          if [ -n "$NPM_TOKEN" ]; then
+            npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"
+          fi
           npm run release
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
