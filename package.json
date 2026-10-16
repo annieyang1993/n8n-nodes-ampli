@@ -1,6 +1,6 @@
 {
 	"name": "n8n-nodes-ampli",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "n8n community node for Ampli: generate viral-template social posts and schedule them to TikTok, Instagram, Pinterest, LinkedIn, Threads, Facebook, YouTube and X",
 	"license": "MIT",
 	"homepage": "https://www.useampli.com",
