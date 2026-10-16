@@ -1,0 +1,69 @@
+# Publishes this n8n community node package to npm on every version tag push.
+#
+# Since May 1 2026, n8n requires all community nodes to be published via
+# GitHub Actions with npm provenance statements. This workflow satisfies that
+# requirement. Provenance lets anyone cryptographically verify that a package
+# was built by this exact workflow, from this exact repository and commit.
+#
+# ONE-TIME SETUP
+#
+# Option A — OIDC Trusted Publishing (recommended, no long-lived secrets):
+#   1. Log in to npmjs.com and open the package's settings.
+#   2. Under "Publish access" → "Trusted Publishers", click "Add a publisher".
+#   3. Select GitHub Actions and fill in:
+#        Repository owner: annieyang1993
+#        Repository name:  n8n-nodes-ampli
+#        Workflow name:    publish.yml
+#   4. Leave the NPM_TOKEN secret unset in this repository.
+#
+# Option B — npm Granular Access Token (needed for the very first publish,
+#   before the package exists on npm):
+#   1. On npmjs.com: Access Tokens → Generate New Token → Granular Access Token
+#      with "Read and write" publish permission.
+#   2. In GitHub: Settings → Secrets and variables → Actions → New secret
+#      named NPM_TOKEN.
+#
+# RELEASE PROCESS
+#
+#   npm run release
+#
+# lints, builds, prompts for a version bump, updates the changelog, commits,
+# tags and pushes — the tag push triggers this workflow.
+
+name: Publish
+
+on:
+  push:
+    tags:
+      - '*.*.*'
+
+jobs:
+  publish:
+    name: Publish to npm
+    runs-on: ubuntu-latest
+
+    permissions:
+      # Required to mint an OIDC token for npm provenance attestation.
+      id-token: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Release
+        # Publishes to npm with a provenance attestation (requires id-token: write above).
+        # Lint and build run as part of the release.
+        run: |
+          [ -n "$NPM_TOKEN" ] && npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"
+          npm run release
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

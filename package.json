@@ -1,0 +1,59 @@
+{
+	"name": "n8n-nodes-ampli",
+	"version": "0.1.0",
+	"description": "n8n community node for Ampli: generate viral-template social posts and schedule them to TikTok, Instagram, Pinterest, LinkedIn, Threads, Facebook, YouTube and X",
+	"license": "MIT",
+	"homepage": "https://www.useampli.com",
+	"keywords": [
+		"n8n-community-node-package",
+		"ampli",
+		"social media",
+		"scheduling",
+		"tiktok",
+		"instagram",
+		"pinterest"
+	],
+	"author": {
+		"name": "Annie Yang",
+		"email": "hi@useampli.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/annieyang1993/n8n-nodes-ampli.git"
+	},
+	"bugs": {
+		"url": "https://github.com/annieyang1993/n8n-nodes-ampli/issues"
+	},
+	"scripts": {
+		"build": "n8n-node build",
+		"build:watch": "tsc --watch",
+		"dev": "n8n-node dev",
+		"lint": "n8n-node lint",
+		"lint:fix": "n8n-node lint --fix",
+		"release": "n8n-node release",
+		"prepublishOnly": "n8n-node prerelease"
+	},
+	"files": [
+		"dist"
+	],
+	"n8n": {
+		"n8nNodesApiVersion": 1,
+		"strict": true,
+		"credentials": [
+			"dist/credentials/AmpliApi.credentials.js"
+		],
+		"nodes": [
+			"dist/nodes/Ampli/Ampli.node.js"
+		]
+	},
+	"devDependencies": {
+		"@n8n/node-cli": "^0.52.4",
+		"eslint": "9.39.4",
+		"prettier": "3.8.3",
+		"release-it": "20.2.0",
+		"typescript": "5.9.3"
+	},
+	"peerDependencies": {
+		"n8n-workflow": "*"
+	}
+}

@@ -1,0 +1,18 @@
+{
+	"node": "n8n-nodes-ampli.ampli",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Marketing & Content"],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://github.com/annieyang1993/n8n-nodes-ampli#credentials"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://github.com/annieyang1993/n8n-nodes-ampli#readme"
+			}
+		]
+	}
+}
